@@ -14,6 +14,8 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useAuth } from '@/context/authcontext';
+import { getErrorMessage } from '@/lib/getFirebaseError';
 
 const formSchema=z.object({
   username:z.string().min(2).max(50),
@@ -22,18 +24,28 @@ const formSchema=z.object({
   confirmpassword: z.string().nonempty({message:"snälla bekräfta lösenordet"})
 }).refine(data=>data.password=== data.confirmpassword,{
   message:"lösenorden matchar inte",
-  path: ["confirmPassword"]
+  path: ["confirmpassword"]
 })
-  function onSubmit(values) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+  
+const RegisterForm = () => {
+  const [errorMessage, setErrorMessage] = useState(null)
+  const { register, loading }=useAuth()
+
+  async function onSubmit(values) {
+    try {
+      const {email,password,username}=values
+      await register(email,password,username)
+    } catch (error) {
+      //const errorMessage=getErrorMessage(error.code)
+      setErrorMessage(error.message)
+    }
+    
     console.log(values)
   }
-const RegisterForm = () => {
-  const [errorMessage, seterrorMessage] = useState(null)
+
   const registerForm=useForm({
     resolver:zodResolver(formSchema),
-    defaultvalues:{
+    defaultValues:{
       username:"",
       email:"",
       password:"",
@@ -82,7 +94,7 @@ const RegisterForm = () => {
         <FormItem>
           <FormLabel>Password</FormLabel>
           <FormControl>
-            <Input placeholder="Enter Password" {...field} />
+            <Input type="password" placeholder="Enter Password" {...field} />
           </FormControl>
           <FormDescription>This is your password.</FormDescription>
           <FormMessage />
@@ -96,14 +108,14 @@ const RegisterForm = () => {
       <FormItem>
         <FormLabel>confirmPassword</FormLabel>
         <FormControl>
-          <Input placeholder="please confirm your password" {...field} />
+          <Input type="password" placeholder="please confirm your password" {...field} />
         </FormControl>
         <FormDescription>This is your confirmedpassword</FormDescription>
         <FormMessage />
     </FormItem>
   )}
   />
-      <Button type="submit">register</Button>
+      <Button disabled={loading} type="submit">register</Button>
     </form>
   </Form>
     </div>

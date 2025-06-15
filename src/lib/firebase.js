@@ -3,7 +3,7 @@ import{getFirestore,persistentLocalCache,persistentMultipleTabManager,initialize
 import {getAuth} from 'firebase/auth'
 import {getStorage} from 'firebase/storage'
 const firebaseConfig = {
-    apikey:process.env.NEXT_PUBLIC_API_KEY,
+    apiKey:process.env.NEXT_PUBLIC_API_KEY,
     authDomain:process.env.NEXT_PUBLIC_API_AUTH_DOMAIN,
     projectId:process.env.NEXT_PUBLIC_API_PROJECT_ID,
     storageBucket:process.env.NEXT_PUBLIC_API_STORAGE_BUCKET,

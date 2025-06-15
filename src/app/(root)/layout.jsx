@@ -1,18 +1,17 @@
+"use client"
+import { useAuth } from '@/context/authcontext'
 import React from 'react'
 
-const ApplicationLayout = ({authenticated,children,notauthenticated}) => {
+const ApplicationLayout = ({authenticated,notauthenticated}) => {
+  const {user}=useAuth()
   return (
-    <div>ApplicationLayout
-        <div>
-            { children}
-        </div>
-        <div>
-            { authenticated }
-        </div>
-        <div>
-            { notauthenticated }
-        </div>
-    </div>
+    <>
+    {
+      user===null
+      ?notauthenticated
+      :authenticated
+    }
+    </>
   )
 }
 
