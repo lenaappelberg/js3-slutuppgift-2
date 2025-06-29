@@ -1,26 +1,40 @@
 "use client"
 
-import { serverTimestamp } from "firebase/firestore"
+import { addDoc, serverTimestamp } from "firebase/firestore"
+import { useAuth } from "./authcontext"
 
-const { createContext } = require("react")
+const { createContext, useState } = require("react")
 
 const TaskContext=createContext()
 
 export const TasksProvider=({children})=>{
-    //reocurring: ,
-    /*const addTask=async(taskdata)=>{
+    const [loading,setLoading]=useState(false)
+    const isAdmin=useAuth()
+    const addTask=async(taskdata)=>{
+        if (isAdmin())return
+        setLoading(true)
+
+        try {
+            
         const newTask={
-            title: ,
-            ownerId: ,
-            date: ,
-            order: ,
+            ...taskdata,
+            date: format(taskData.date,"yyyy-MM-dd"),
             completed:false,
             completedAt:null,
             createdAt:serverTimestamp
         }
-    }*/
+        await addDoc(collection(db,"tasks"),newTask)
+        } catch (error) {
+         console.log(error)
+         throw error   
+        }finally{
+            setLoading(false)
+        }
+        //reocurring: ,
+    }
     const value={
-
+        addTask,
+        loading
     }
     return(
         <TaskContext.Provider value={value}>

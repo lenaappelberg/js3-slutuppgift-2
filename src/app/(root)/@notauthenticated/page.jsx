@@ -3,7 +3,7 @@ import { AuthFormView } from './_components/AuthFormView'
 
 function notauthenticated() {
   return (
-    <div>notauthenticated
+    <div>
       <AuthFormView/>
     </div>
   )

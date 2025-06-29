@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input"
 import { useAuth } from '@/context/authcontext';
 import { getErrorMessage } from '@/lib/getFirebaseError';
 
-const formSchema=z.object({
+export const formSchema=z.object({
   username:z.string().min(2).max(50),
   email:z.string().email({message:"ange ett giltig epostaddress"}),
   password: z.string().nonempty().min(6),
@@ -27,7 +27,7 @@ const formSchema=z.object({
   path: ["confirmpassword"]
 })
   
-const RegisterForm = () => {
+const RegisterForm = ({changeForm,form}) => {
   const [errorMessage, setErrorMessage] = useState(null)
   const { register, loading }=useAuth()
 
@@ -42,20 +42,17 @@ const RegisterForm = () => {
     
     console.log(values)
   }
-
   const registerForm=useForm({
-    resolver:zodResolver(formSchema),
-    defaultValues:{
-      username:"",
-      email:"",
-      password:"",
-      confirmpassword:"",
-    },
-    
-  })
-
+              resolver:zodResolver(formSchema),
+              defaultValues:{
+                username:"",
+                email:"",
+                password:"",
+                confirmpassword:"",
+              },
+            })
   return (
-    <div>RegisterForm
+    <div>
       { errorMessage && <p>{ errorMessage }</p>}
       <Form {...registerForm}>
         <form onSubmit={registerForm.handleSubmit(onSubmit)}>
@@ -115,6 +112,7 @@ const RegisterForm = () => {
     </FormItem>
   )}
   />
+  <p>Har du ett konto <span onClick={()=>changeForm("login")} className="underline cursor-pointer">Logga in</span></p>
       <Button disabled={loading} type="submit">register</Button>
     </form>
   </Form>
