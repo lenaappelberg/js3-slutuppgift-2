@@ -1,11 +1,14 @@
-import {Task} from "./task"
+"use client"
+import { Task } from "./task"
 
 
 export const TaskList=({tasks,handleComplete})=> {
+  console.log(tasks)
+  //space-y-3 w-full
   return (
-    <div className="space-y-3 w-full">
+    <div className="">
         {
-            tasks.map(task=>{
+            tasks.map((task)=>{
                 <Task key={task.id} task={task} handleComplete={handleComplete}/>
             })
         }

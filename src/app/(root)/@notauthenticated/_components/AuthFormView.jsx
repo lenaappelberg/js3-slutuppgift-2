@@ -15,7 +15,7 @@ export const AuthFormView = () => {
       }
     }
 
-    const LoginForm=useForm({
+    /*const LoginForm=useForm({
         resolver:zodResolver(loginFormSchema),
         defaultValues:{
           email:"",
@@ -30,7 +30,7 @@ export const AuthFormView = () => {
               confirmpassword:"",
             },
             
-          })
+          })*/
   return (
     <div>
         {

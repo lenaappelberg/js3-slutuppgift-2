@@ -1,7 +1,7 @@
 "use client"
 
 import { auth, db } from "@/lib/firebase"
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth"
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth"
 import { addDoc, doc, getDoc, setDoc, Timestamp } from "firebase/firestore"
 import { useRouter } from "next/navigation"
 
@@ -9,7 +9,7 @@ const { createContext, useContext, useState, useEffect } = require("react")
 
 const AuthContext=createContext()
 
-export const AuthPovider=({ children})=>{
+export const AuthProvider=({ children})=>{
     const [user, setUser] = useState(null)
     const [loading,setLoading]=useState(false)
     const [authLoaded,setAuthLoaded]=useState(false)
@@ -17,7 +17,7 @@ export const AuthPovider=({ children})=>{
     console.log(user)
 
     useEffect(()=>{
-        onAuthStateChanged(auth,async(firebaseUser)=>{
+        const unsub=onAuthStateChanged(auth,async(firebaseUser)=>{
             if (!firebaseUser) {
                 setUser(null)
                 setAuthLoaded(true)
@@ -29,7 +29,7 @@ export const AuthPovider=({ children})=>{
                 let docSnap=null
                 for (let i = 0; i < retries; i++) {
                     
-                    const docSnap=await getDoc(docref)
+                    docSnap=await getDoc(docref)
                     if (docSnap.exists())break
                     await new Promise(resolve=>setTimeout(resolve,delay))
                 }
@@ -92,13 +92,18 @@ export const AuthPovider=({ children})=>{
             setLoading(false)
         }
     }
+    const isAdmin = () => {
+        if (!user) return false
+        return user.role ==="admin"
+    }
     const value={
         user,
         loading,
         authLoaded,
         register,
         logout,
-        login
+        login,
+        isAdmin
     }
     return (
         <AuthContext.Provider value={value}>

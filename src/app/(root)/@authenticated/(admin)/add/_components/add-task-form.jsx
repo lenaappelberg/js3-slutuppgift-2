@@ -1,7 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import * as z from "zod"
+import {z} from 'zod'
+import * as react from "react"
+
 
 import { Button } from "@/components/ui/button"
 import {
@@ -39,6 +41,11 @@ import {
 import { Calendar } from "@/components/ui/calendar"
 import { useTasks } from "@/context/tasksContext"
 import { eachDayOfInterval } from "date-fns"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { cn } from "@/lib/utils"
+import { Check, ChevronsUpDown } from "lucide-react"
 const  base=z.object({
   title:z.string().nonempty({message:"skriv titel"}),
   ownerId:z.string().nonempty({message:"välj en anvädnare"}),
@@ -54,26 +61,28 @@ const multiple= base.extend({
 const range=base.extend({
   reocurring:z.literal("range"),
   dateRage:z.object({
-    from:z.data(),
+    from:z.date(),
     to:z.date()
   })
 })
 
-const formSchema = z.discriminatedUnion("reocurring",{
+const formSchema = z.discriminatedUnion("reocurring",[
   single,
   multiple,
-  range
-})
-export const addTaskForm=()=> {
+  range]
+)
+export const AddTaskForm=()=> {
   const SearchParams=useSearchParams()
   const presetDate=SearchParams.get("date")
   const presetUserId=SearchParams.get("userId")
-  const {users}=useUsers()
+  const { users }=useUsers()
   const{addTask}=useTasks()
   const router=useRouter()
-  const {submitted,setSubmitted}=useState(false)
+  const [submitted,setSubmitted]=useState(false)
   const loading=false
-  const form = useForm<z.infer<typeof formSchema>>({
+  console.log(users)
+  //<z.infer<typeof formSchema>>
+  const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
@@ -82,7 +91,7 @@ export const addTaskForm=()=> {
       date:presetDate ? parse(presetDate, "yyyy,MM,dd",new Date()) ?? new Date():new Date()
     },
   })
-  const reocurringType=form.watch()
+  const reocurringType=form.watch("reocurring")
   async function onSubmit(values) {
     const base={
       title:values.title,
@@ -148,7 +157,7 @@ export const addTaskForm=()=> {
                       {field.value
                         ? users.find(
                             (user) => user.uid === field.value
-                          )?.displayName
+                          )?.userName
                         : "Select user"}
                       <ChevronsUpDown className="opacity-50" />
                     </Button>
@@ -157,21 +166,21 @@ export const addTaskForm=()=> {
                 <PopoverContent className="w-[200px] p-0">
                   <Command>
                     <CommandInput
-                      placeholder="Search framework..."
+                      placeholder="Search user..."
                       className="h-9"
                     />
                     <CommandList>
-                      <CommandEmpty>No framework found.</CommandEmpty>
+                      <CommandEmpty>No user found.</CommandEmpty>
                       <CommandGroup>
                         {users.map((user) => (
                           <CommandItem
-                            value={user.displayName.ToLowerCase()}
+                            value={user.username}
                             key={user.uid}
                             onSelect={() => {
-                              form.setValue("language", user.uid)
+                              form.setValue("ownerId", user.uid)
                             }}
                           >
-                            {user.displayName}
+                            {user.userName}
                             <Check
                               className={cn(
                                 "ml-auto",
@@ -248,7 +257,7 @@ export const addTaskForm=()=> {
           )}
         />
         }
-        <Button disabled={loading||submitted} type="submit">{Loading ? "Skapar...":"Skapa"}</Button>
+        <Button disabled={loading||submitted} type="submit">{loading ? "Skapar...":"Skapa"}</Button>
       </form>
     </Form>
   )

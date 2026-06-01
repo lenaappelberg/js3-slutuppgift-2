@@ -1,9 +1,10 @@
 "use client"
 import React from 'react'
 import Logout from './log-out'
-import {Taskcolumn} from '@/components/tasks/task-column'
+import { Taskcolumn } from '@/components/tasks/task-column'
 import { isValid, parse } from 'date-fns'
 import { useSearchParams } from 'next/navigation'
+import { useAuth } from '@/context/authcontext'
 
 function authenticated() {
   const searchParams=useSearchParams()
@@ -15,7 +16,9 @@ function authenticated() {
         const {user}=useAuth()
   return (
     <>
-      <div>authenticated <Taskcolumn date={selectedDate} user={user}/></div>
+      <div>authenticated 
+        <Taskcolumn date={selectedDate} user={user} className={""}/>
+      </div>
       <Logout/>
     </>
   )
