@@ -1,6 +1,6 @@
 "use client"
 
-import { addDoc, collection, DocumentReference, onSnapshot, orderBy, query, serverTimestamp, updateDoc } from "firebase/firestore"
+import { addDoc, collection, doc, DocumentReference, onSnapshot, orderBy, query, serverTimestamp, updateDoc } from "firebase/firestore"
 import { useAuth } from "./authcontext"
 import { db } from "@/lib/firebase"
 import { format } from "date-fns"

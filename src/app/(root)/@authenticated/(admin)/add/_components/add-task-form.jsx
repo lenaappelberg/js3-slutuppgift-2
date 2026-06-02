@@ -157,13 +157,13 @@ export const AddTaskForm=()=> {
                       {field.value
                         ? users.find(
                             (user) => user.uid === field.value
-                          )?.userName
+                          )?.username
                         : "Select user"}
                       <ChevronsUpDown className="opacity-50" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="w-[200px] p-0 bg-zinc-50">
                   <Command>
                     <CommandInput
                       placeholder="Search user..."
@@ -180,7 +180,7 @@ export const AddTaskForm=()=> {
                               form.setValue("ownerId", user.uid)
                             }}
                           >
-                            {user.userName}
+                            {user.username}
                             <Check
                               className={cn(
                                 "ml-auto",

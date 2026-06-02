@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/*@import "shadcn/tailwind/css";*/
 
 
 @layer base {
@@ -140,7 +140,9 @@
 
     --sidebar-ring: 217.2 91.2% 59.8%}
 }
-
+.wrapper{
+  @apply container mx-auto px-4;
+}
 
 
 @layer base {

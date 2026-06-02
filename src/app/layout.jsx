@@ -31,12 +31,16 @@ export default function RootLayout({ children }) {
     <html lang="en">
       
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-300`}
       >
         <AuthProvider>
           <UsersProvider>
             <TasksProvider>
-              {children}
+              <div className="wrapper">
+                <div className="bg-background my-4 rounded-sm p-4">
+                  {children}
+                </div>
+              </div>
             </TasksProvider>
           </UsersProvider>
         </AuthProvider>

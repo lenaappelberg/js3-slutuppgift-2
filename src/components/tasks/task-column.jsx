@@ -39,22 +39,20 @@ export const Taskcolumn = (date,user,className) => {
         })})
         console.log(data)
         setTasks(data)
-        console.log(tasks)
       }
     
       gettasks()
     }, [])
     
     const {completetask}=useTasks()
-    //let className {cn("bg-background max-w-96 p-10 mx-auto flex flex-col",className)}
     const handleComplete= async (task) => {
         completetask(task.id)
     }
     
   return (
-    <div className="">
+    <div className={cn("bg-background max-w-96 p-10 mx-auto flex flex-col", className)}>
         <div className="flex-1">
-            <TaskList tasks={TASKS} handleComplete={handleComplete}/>
+            <TaskList tasks={tasks} handleComplete={handleComplete}/>
         </div>
     </div>
   )

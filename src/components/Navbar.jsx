@@ -4,16 +4,14 @@ import Link from 'next/link'
 
 const Navbar = () => {
   return (
-    <nav>
-        <p>
+    <nav className='flex items-center justify-between pb-5'>
+      <div>
+        <h1 className='block'>
             företagplanner
-        </p>
-        <Button>
-          <Link href="/">Hem</Link>
-        </Button>
-        <Button>
-        <Link href="/add">Lägg till uppgift</Link>
-        </Button>
+        </h1>
+        <Link className='hidden' href="/">Hem</Link>
+        <Link className='hidden' href="/add">Lägg till uppgift</Link>
+        </div>
     </nav>
   )
 }
