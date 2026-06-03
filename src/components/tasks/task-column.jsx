@@ -8,28 +8,9 @@ import { useEffect, useState } from "react"
 import { collection, getDocs } from "firebase/firestore"
 import { db } from "@/lib/firebase"
 
-
-const TASKS=[
-    {
-        id:1,
-        title:"task 1"
-    },
-    {
-        id:2,
-        title:"task 2"
-    },
-    {
-        id:3,
-        title:"task 3"
-    },
-    {
-        id:4,
-        title:"task 4"
-    }
-    ]
-export const Taskcolumn = (date,user,className) => {
-    const [tasks, setTasks] = useState([])
-    useEffect(() => {
+export const Taskcolumn = ({date,user,className}) => {
+    //const [tasks, setTasks] = useState([])
+    /*useEffect(() => {
       const gettasks = async () => {
         const data=[]
         const querySnapshot= await getDocs(collection(db,"tasks"))
@@ -42,17 +23,20 @@ export const Taskcolumn = (date,user,className) => {
       }
     
       gettasks()
-    }, [])
-    
-    const {completetask}=useTasks()
+    }, [])*/
+    const {completetask,gettasksbyuserfordate}=useTasks()
+    const tasks=gettasksbyuserfordate(user.uid)
+    console.log(tasks)
+    const notcompleted=tasks.filter(task=>!task.completed)
+    console.log(notcompleted)
     const handleComplete= async (task) => {
         completetask(task.id)
     }
     
   return (
-    <div className={cn("bg-background max-w-96 p-10 mx-auto flex flex-col", className)}>
+    <div className={cn("bg-foreground max-w-96 p-10 mx-auto flex flex-col rounded-sm", className)}>
         <div className="flex-1">
-            <TaskList tasks={tasks} handleComplete={handleComplete}/>
+            <TaskList tasks={notcompleted} handleComplete={handleComplete}/>
         </div>
     </div>
   )

@@ -4,7 +4,7 @@ export const Task = ({task,handleComplete}) => {
   //onClick={()=>handleComplete(task)} onClick={()=>handleComplete(task)} cursor-pointer
   console.log(task)
   return (
-    <div className="p-4" >
+    <div className="p-4 bg-background rounded-sm " >
         <span>{task.title}</span>
         <span>Deadline:{task.date}</span>
         <button onClick={()=>handleComplete(task)}>complete</button>

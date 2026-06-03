@@ -4,7 +4,6 @@ import { AddTaskForm } from './_components/add-task-form'
 const Addtaskpage= () => {
   return (
     <>
-    hello
       <AddTaskForm/>
     </>
   )

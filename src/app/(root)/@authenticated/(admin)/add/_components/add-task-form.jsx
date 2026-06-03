@@ -212,7 +212,7 @@ export const AddTaskForm=()=> {
             <FormItem>
                <Calendar
                 mode="single"
-                selected={field.vale}
+                selected={field.value}
                 onSelect={field.onChange}
                 className="rounded-lg border"
               />
@@ -230,7 +230,7 @@ export const AddTaskForm=()=> {
             <FormItem>
                <Calendar
                 mode="multiple"
-                selected={field.vale}
+                selected={field.value}
                 onSelect={field.onChange}
                 className="rounded-lg border"
               />
@@ -248,7 +248,7 @@ export const AddTaskForm=()=> {
             <FormItem>
                <Calendar
                 mode="range"
-                selected={field.vale}
+                selected={field.value}
                 onSelect={field.onChange}
                 className="rounded-lg border"
               />

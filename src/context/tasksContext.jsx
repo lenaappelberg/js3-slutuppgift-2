@@ -1,6 +1,6 @@
 "use client"
 
-import { addDoc, collection, doc, DocumentReference, onSnapshot, orderBy, query, serverTimestamp, updateDoc } from "firebase/firestore"
+import { addDoc, collection, doc, DocumentReference, onSnapshot, orderBy, query, serverTimestamp, updateDoc, where } from "firebase/firestore"
 import { useAuth } from "./authcontext"
 import { db } from "@/lib/firebase"
 import { format } from "date-fns"
@@ -17,7 +17,7 @@ export const TasksProvider=({children})=>{
       if (!user||authloaded)return
       setLoading(true)
       let q
-      if (isAdmin()) {
+      if (user.role==="admin") {
         q=query(collection(db,"tasks"),orderBy("date"))
       }else{
         q=query(collection(db,"tasks"),orderBy("date"),where("ownerId","==",user.uid))
@@ -74,10 +74,16 @@ export const TasksProvider=({children})=>{
         }
         //reocurring: ,
     }
+    const gettasksbyuserfordate=(uid,date)=>{
+        return tasks
+        .filter(task=>task.ownerId===uid)
+        .sort((a,b)=>a.order-b.order)
+    }
     const value={
         addTask,
         loading,
-        completetask
+        completetask,
+        gettasksbyuserfordate
     }
     return(
         <TaskContext.Provider value={value}>

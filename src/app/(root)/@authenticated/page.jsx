@@ -16,7 +16,7 @@ function authenticated() {
         const {user}=useAuth()
   return (
     <>
-      <div>authenticated 
+      <div> 
         <Taskcolumn date={selectedDate} user={user} className={""}/>
       </div>
       <Logout/>

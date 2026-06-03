@@ -1,7 +1,7 @@
 import { Task } from "./task"
 
 
-export const TaskList = ({ tasks = [], handleComplete }) => {
+export const TaskList = ({ tasks, handleComplete }) => {
   console.log(tasks)
   return (
     <div className="space-y-3 w-full">

@@ -81,7 +81,7 @@ const Loginform = ({changeForm,form}) => {
       </FormItem>
     )}
   />
-  <p>Glömt ditt lösenord? <span onClick={()=>changeForm("register")} className="underline cursor-pointer">Regstera dig</span></p>
+  <p>Have you forgotten your password <span onClick={()=>changeForm("register")} className="underline cursor-pointer">Register</span></p>
       <Button disabled={loading} type="submit">login</Button>
     </form>
   </Form>
