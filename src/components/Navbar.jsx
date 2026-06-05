@@ -7,17 +7,17 @@ import { useAuth } from '@/context/authcontext'
 const Navbar = () => {
   const {isAdmin}=useAuth()
   return (
-    <nav className='flex flex-row items-center justify-between pb-5'>
-      <div>
+    <nav className='flex flex-row items-center justify-between pb-5' >
+      <div >
         <h1 className='block'>
-            företagplanner
+            Companyplanner
         </h1>
         <Link className='block' href="/">Hem</Link>
         {
           isAdmin()&&(
             <>
-            <Link href="/all">All</Link>
-            <Link href="/add">Add tasks</Link>
+            <Link href="/all" className="md:flex">All</Link>
+            <Link href="/add" className="md:flex">Add tasks</Link>
             </>
           )
         }

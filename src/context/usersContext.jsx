@@ -16,7 +16,7 @@ export const UsersProvider=({children})=>{
     //const isAdmin= user?.role==="admin"
     console.log(users)
     useEffect(()=>{
-        if (!isAdmin)return
+        if (!isAdmin())return
 
         const q=query(collection(db,"users"))
         const unsub = onSnapshot(q, querySnapshot=>{

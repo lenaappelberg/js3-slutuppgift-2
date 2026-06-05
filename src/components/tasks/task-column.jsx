@@ -34,7 +34,10 @@ export const Taskcolumn = ({date,user,className}) => {
     }
     
   return (
-    <div className={cn("bg-foreground max-w-96 p-10 mx-auto flex flex-col rounded-sm", className)}>
+    <div className="bg-foreground max-w-96 p-10 mx-auto flex flex-col rounded-sm">
+      <div className="bg-background rounded-sm mb-10 p-2">
+        User: {user.username}
+      </div>
         <div className="flex-1">
             <TaskList tasks={notcompleted} handleComplete={handleComplete}/>
         </div>

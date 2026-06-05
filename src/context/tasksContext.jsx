@@ -14,7 +14,7 @@ export const TasksProvider=({children})=>{
     const {isAdmin,authloaded,user}=useAuth()
     const [tasks, setTasks] = useState([])
     useEffect(() => {
-      if (!user||authloaded)return
+      if (!isAdmin())return
       setLoading(true)
       let q
       if (user.role==="admin") {

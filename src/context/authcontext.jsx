@@ -48,7 +48,7 @@ export const AuthProvider=({ children})=>{
         })
         return ()=>unsub()
     },[])
-    const register=async (email,password,displayName)=>{
+    const register=async (email,password,displayName,userrole)=>{
         setLoading(true)
         try {
             const res = await createUserWithEmailAndPassword(auth,email,password)
@@ -62,7 +62,7 @@ export const AuthProvider=({ children})=>{
                 uid:res.user.uid,
                 email:res.user.email,
                 username:res.user.displayName,
-                role:"user",
+                role:userrole,
                 createdAt: Timestamp.now(),
                 photoUrl:null,
                 verified:false,
@@ -93,8 +93,10 @@ export const AuthProvider=({ children})=>{
         }
     }
     const isAdmin = () => {
-        if (!user) return false
-        return user.role ==="admin"
+        if(user!=null){
+        if (user.role!=="admin") return false
+        else{
+        return user.role ==="admin"}}
     }
     const value={
         user,
