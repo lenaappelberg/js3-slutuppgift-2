@@ -11,7 +11,7 @@ const UsersContext=createContext()
 export const UsersProvider=({children})=>{
     const [users,setUsers]=useState([])
     const [loading,setLoading]=useState(false)
-    const {isAdmin}=useAuth()
+    const {isAdmin,authLoaded,user}=useAuth()
     //console.log(user)
     //const isAdmin= user?.role==="admin"
     console.log(users)

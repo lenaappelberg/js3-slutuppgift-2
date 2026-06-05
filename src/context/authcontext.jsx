@@ -18,6 +18,7 @@ export const AuthProvider=({ children})=>{
 
     useEffect(()=>{
         const unsub=onAuthStateChanged(auth,async(firebaseUser)=>{
+            console.log(firebaseUser)
             if (!firebaseUser) {
                 setUser(null)
                 setAuthLoaded(true)

@@ -11,11 +11,13 @@ const TaskContext=createContext()
 
 export const TasksProvider=({children})=>{
     const [loading,setLoading]=useState(false)
-    const {isAdmin,authloaded,user}=useAuth()
+    const {isAdmin,authLoaded,user}=useAuth()
     const [tasks, setTasks] = useState([])
+    console.log(tasks)
     useEffect(() => {
-      if (!isAdmin())return
+      if (!user||!authLoaded)return
       setLoading(true)
+      console.log(user)
       let q
       if (user.role==="admin") {
         q=query(collection(db,"tasks"),orderBy("date"))
@@ -53,7 +55,7 @@ export const TasksProvider=({children})=>{
     }
     const getnextorder=()=>{}
     const addTask=async(taskdata)=>{
-        if (!isAdmin)return
+        if (!isAdmin())return
         setLoading(true)
 
         try {
@@ -74,10 +76,11 @@ export const TasksProvider=({children})=>{
         }
         //reocurring: ,
     }
-    const gettasksbyuserfordate=(uid,date)=>{
+    const gettasksbyuserfordate=(uid)=>{
+        console.log(tasks)
         return tasks
         .filter(task=>task.ownerId===uid)
-        .sort((a,b)=>a.order-b.order)
+        //.sort((a,b)=>a.order-b.order)
     }
     const value={
         addTask,
