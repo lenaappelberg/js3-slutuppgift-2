@@ -129,7 +129,7 @@ const RegisterForm = ({ changeForm, form }) => {
             name="admin"
             render={({field}) => (
               <FormItem>
-                <FormDescription>admin</FormDescription>
+                <FormDescription>Make an admin account </FormDescription>
                 <FormControl>
                   <Switch
                   checked={field.value}
